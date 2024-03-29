@@ -87,7 +87,7 @@ def get_test_cases (html_content):
                     Website HTML:
                     ### {html_content} ###
 
-                    Please ensure that the generated test cases cover all relevant accessibility scenarios for the identified personas based on the website's HTML structure and content. If a particular persona is not applicable or relevant based on the analysis, do not include test cases for that persona.
+                    Please ensure that the generated test cases cover all relevant accessibility scenarios for the identified personas based on the website's HTML structure and content. If a particular persona is not applicable or relevant based on the analysis, do not include that persona.
                     """
     
     
