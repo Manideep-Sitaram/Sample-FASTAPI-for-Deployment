@@ -1,1 +1,4 @@
 fastapi[all]
+pydantic
+google-generativeai
+python-dotenv
