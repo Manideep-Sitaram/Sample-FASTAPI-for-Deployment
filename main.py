@@ -114,7 +114,7 @@ async def receive_url(urlObject: UrlObjectModel):
         try:
             test_cases = get_test_cases(response.text)
             # Assuming get_test_cases returns a JSON string
-            print(test_cases)
+            logging.info(test_cases)
             test_cases_json = json.loads(test_cases)
         except json.JSONDecodeError:
             test_cases_json = {"message": "Error decoding JSON response from the model"}
