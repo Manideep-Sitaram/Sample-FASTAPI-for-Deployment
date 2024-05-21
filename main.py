@@ -142,13 +142,11 @@ async def persona_testcases(persona_testcase: PersonaTestCase):
     name,objectives,page_weburl = persona_testcase
     
     output_format = """{
-  "feature": "Feature: {feature_description}",
-  "background": {
-    "given": "Given the user is on the ADA web guidance page: {page_weburl}"
-  },
+  "feature": "{feature_description}",
+  "background": "Given the user is on the ADA web guidance page: {page_weburl}"
   "scenarios": [
     {
-      "scenario": "Scenario: {scenario_name_1}",
+      "scenario": "{scenario_name_1}",
       "given": [
         "The user navigates to the page"
       ],
@@ -160,7 +158,7 @@ async def persona_testcases(persona_testcase: PersonaTestCase):
       ]
     },
     {
-      "scenario": "Scenario: {scenario_name_2}",
+      "scenario": "{scenario_name_2}",
       "given": [
         "The user navigates to the page"
       ],
@@ -172,7 +170,7 @@ async def persona_testcases(persona_testcase: PersonaTestCase):
       ]
     },
     {
-      "scenario": "Scenario: {scenario_name_3}",
+      "scenario": "{scenario_name_3}",
       "given": [
         "The user navigates to the page"
       ],
@@ -184,7 +182,7 @@ async def persona_testcases(persona_testcase: PersonaTestCase):
       ]
     },
     {
-      "scenario": "Scenario: {scenario_name_4}",
+      "scenario": "{scenario_name_4}",
       "given": [
         "The user navigates to the page"
       ],
@@ -199,13 +197,11 @@ async def persona_testcases(persona_testcase: PersonaTestCase):
 }
 """
     example_format="""{
-  "feature": "Feature: Web Accessibility for Visual Impairment",
-  "background": {
-    "given": "Given the user is on the ADA web guidance page: https://www.ada.gov/resources/web-guidance/"
-  },
+  "feature": "Web Accessibility for Visual Impairment",
+  "background":  "Given the user is on the ADA web guidance page: https://www.ada.gov/resources/web-guidance/",
   "scenarios": [
     {
-      "scenario": "Scenario: Verify Image Alt Text",
+      "scenario": "Verify Image Alt Text",
       "given": [
         "The user navigates to the page"
       ],
@@ -217,7 +213,7 @@ async def persona_testcases(persona_testcase: PersonaTestCase):
       ]
     },
     {
-      "scenario": "Scenario: Verify Color Contrast",
+      "scenario": "Verify Color Contrast",
       "given": [
         "The user navigates to the page"
       ],
@@ -229,7 +225,7 @@ async def persona_testcases(persona_testcase: PersonaTestCase):
       ]
     },
     {
-      "scenario": "Scenario: Verify Keyboard Accessibility",
+      "scenario": "Verify Keyboard Accessibility",
       "given": [
         "The user navigates to the page"
       ],
@@ -241,7 +237,7 @@ async def persona_testcases(persona_testcase: PersonaTestCase):
       ]
     },
     {
-      "scenario": "Scenario: Verify No Flickering Content",
+      "scenario": "Verify No Flickering Content",
       "given": [
         "The user navigates to the page"
       ],
