@@ -8,7 +8,7 @@ import google.generativeai as genai
 import os
 import json
 from dotenv import load_dotenv
-from typing import List
+from typing import List, Optional,Dict
 
 load_dotenv() 
 
@@ -19,6 +19,8 @@ app = FastAPI()
 genai.configure(api_key=os.getenv("MANIDEEP_GOOGLE_API_KEY"))
 model = genai.GenerativeModel(model_name = "gemini-pro")
 
+global html_for_website
+
 class UrlObjectModel(BaseModel):
     url: str
     
@@ -26,6 +28,18 @@ class PersonaTestCase(BaseModel):
     name: str
     objectives: List[str]
     page_weburl: str
+    
+class Scenario(BaseModel):
+    scenario: str
+    given: List[str]
+    when: List[str]
+    then: List[str]
+
+class Feature(BaseModel):
+    feature: str
+    scenarios: List[Scenario]
+    desired_framework: str
+    website_url: str
 
 
 app.add_middleware(
@@ -110,10 +124,12 @@ def get_test_cases (html_content):
 async def receive_url(urlObject: UrlObjectModel):
 
     url = urlObject.url
+    global website_html_content
 
     try:
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
+        website_html_content = response.text
     except requests.RequestException as e:
         raise HTTPException(status_code=400, detail=f"Error accessing URL: {e}")
 
@@ -135,6 +151,20 @@ async def receive_url(urlObject: UrlObjectModel):
 @app.get("/hello")
 async def hello_world():
     return "Hello World"
+  
+@app.post("/get_persona_implentation")
+async def get_persona_implementation(feature_object: Feature):
+  feature,sceanarios,desired_framework,website_url = feature_object
+  output_format = """{
+    code: [Test Implementation]
+    }"""
+  prompt=f"""Generate the Test implementation for the feature {feature} and scenarios of the feature {sceanarios} in the desired Framework {desired_framework} 
+  this is the website html content {website_html_content} """
+  
+  response = model.generate_content(prompt)
+  print(response)
+  return {"content": response.text}
+  
 
 @app.post("/persona_testcases")
 async def persona_testcases(persona_testcase: PersonaTestCase):
@@ -143,7 +173,7 @@ async def persona_testcases(persona_testcase: PersonaTestCase):
     
     output_format = """{
   "feature": "{feature_description}",
-  "background": "Given the user is on the ADA web guidance page: {page_weburl}"
+  "background": "Given the user is on the ADA web guidance page: {page_url}"
   "scenarios": [
     {
       "scenario": "{scenario_name_1}",
